@@ -1,200 +1,164 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: myHomePage(),
     );
   }
 }
 
+// ignore: camel_case_types
 class myHomePage extends StatefulWidget {
-  const myHomePage({Key? key}) : super(key: key);
+  const myHomePage({super.key});
 
   @override
-  myHomePageMainState createState() => myHomePageMainState();
+  // ignore: library_private_types_in_public_api
+  _MainStatemyHomePage createState() => _MainStatemyHomePage();
 }
 
-class myHomePageMainState extends State<myHomePage> {
+class _MainStatemyHomePage extends State<myHomePage> {
+  TextEditingController _StudIDControler = new TextEditingController();
+  TextEditingController _CommentControler = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
-        title: Text("Flutter"),
-        backgroundColor: Color.fromARGB(255, 255, 140, 0),
-        centerTitle: true,
-        titleTextStyle: TextStyle(
-          color: Colors.white,
-          fontSize: 20,
+        title: Row(
+          children: [
+            Image.asset('assets/images/logo.png', width: 30),
+            const SizedBox(width: 10),
+            const Text(
+                "Manuel S. Enverga University \nFoundation Candelaria, Inc."),
+          ],
         ),
-        // leading: Icon(
-        //   Icons.menu,
-        //   color: Colors.white,
-        // ),
+        backgroundColor: Color.fromARGB(218, 93, 1, 1),
+        centerTitle: true,
+        titleTextStyle: const TextStyle(
+          color: Colors.white,
+          fontSize: 10,
+        ),
+
+        //leading: const Icon(Icons.smart_display, color: Colors.white),
         actions: [
           IconButton(
-            onPressed: () {
-              print("clicked");
-            },
-            icon: Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
-          ),
+              onPressed: () {
+                print("You clicked the home button");
+              },
+              icon: const Icon(Icons.home),
+              color: Colors.white),
           IconButton(
-            onPressed: () {
-              print("clicked");
-            },
-            icon: Icon(
-              Icons.account_box_outlined,
-              color: Colors.white,
-            ),
-          ),
+              onPressed: () {
+                print("You clicked the account button");
+              },
+              icon: const Icon(Icons.account_circle_outlined),
+              color: Colors.white),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: "Home",
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Text(
+              "Computer Science Department",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            TextField(
+              controller: _StudIDControler,
+              keyboardType: TextInputType.numberWithOptions(),
+              decoration: InputDecoration(
+                  labelText: "Student Number",
+                  hintText: "Enter the number",
+                  prefixIcon: Icon(Icons.search),
+                  prefixIconColor: Colors.blue,
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.blue),
+                      borderRadius: BorderRadius.circular(20))),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            TextField(
+              controller: _CommentControler,maxLines: 3,
+              keyboardType: TextInputType.numberWithOptions(),
+              decoration: InputDecoration(
+                  labelText: "Comments",
+                  hintText: "Enter Comments",
+                  prefixIcon: Icon(Icons.comment),
+                  prefixIconColor: Colors.blue,
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.blue),
+                      borderRadius: BorderRadius.circular(20))),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            ElevatedButton(onPressed: (){
+              SnackBar snackers=SnackBar(content:Text("Student number is ${_StudIDControler.text} and comment is ${_CommentControler.text}" ) ,);
+              ScaffoldMessenger.of(context).showSnackBar(snackers);
+            }, child: Text("Submit"))
+          ],
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: "Settings",
-        )
-      ]),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: "Settings"),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print("click");
+          print("You clicked the floating action button!");
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       drawer: Drawer(
         child: Column(
           children: [
-            const DrawerHeader(
-                child: Icon(
-              Icons.people,
-              size: 100,
-            )),
+            DrawerHeader(
+              child: Image.asset("assets/images/logo.png", width: 300),
+            ),
             ListTile(
-              leading: Icon(Icons.location_city),
-              title: Text("Location"),
+              leading: const Icon(Icons.subject_outlined),
+              title: const Text("Courses offered"),
               onTap: () {
-                print("nc one");
+                print("You clicked the course offered menu");
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              leading: Icon(Icons.access_alarm),
-              title: Text("Location"),
+              leading: const Icon(Icons.add_location_alt_rounded),
+              title: const Text("Location"),
               onTap: () {
-                print("nc one");
+                print("You clicked the location menu");
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.phone_in_talk_rounded),
+              title: const Text("Contact Us"),
+              onTap: () {
+                print("You clicked the contact us menu");
                 Navigator.pop(context);
               },
             ),
           ],
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 70.0),
-                child: Image.asset(
-                  "images/logo new.png",
-                  height: 200,
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                "FlipTop",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    "images/google.png",
-                    height: 50,
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Image.asset(
-                    "images/twitter.png",
-                    height: 50,
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Image.asset(
-                    "images/fb.png",
-                    height: 50,
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  print("you clicked");
-                },
-                child: const Text('Click to Continue'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 255, 183, 59),
-                  foregroundColor: Colors.black,
-                ),
-              ),
-              SizedBox(height: 20),
-              OutlinedButton(
-                onPressed: () {
-                  print("click");
-                },
-                child: Text("Buy Now!"),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                ),
-              ),
-              SizedBox(height: 20),
-              TextButton(
-                onPressed: () {
-                  print("click");
-                },
-                child: Text("hi"),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                ),
-              ),
-              SizedBox(height: 20),
-              IconButton(
-                onPressed: () {
-                  print("click");
-                },
-                icon: Icon(Icons.shop),
-                style: IconButton.styleFrom(
-                  foregroundColor: Color.fromARGB(255, 255, 128, 0)
-                ),
-              )
-            ],
-          ),
         ),
       ),
     );
